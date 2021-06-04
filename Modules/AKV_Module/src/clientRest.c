@@ -115,7 +115,6 @@ int Https_Request(struct request_data *postData, char** response, char *operatio
 
 		}
 		//set curl verbose behavior
-		// TODO: TEO debugging, disable verbose later
 		//curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		curl_easy_setopt(curl, CURLOPT_URL, postData->url);
 		/* For HTTPS */
