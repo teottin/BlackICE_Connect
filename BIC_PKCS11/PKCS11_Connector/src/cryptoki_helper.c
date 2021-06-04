@@ -12,7 +12,7 @@
 
 #include <cryptoki.h>
 #include <src/clientRest.h>
-#include <crypto/asn1.h>
+//#include <crypto/asn1.h>
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 #include <openssl/bio.h>

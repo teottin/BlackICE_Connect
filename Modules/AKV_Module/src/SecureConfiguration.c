@@ -88,7 +88,11 @@ ERROR_CODE EncryptParameter(U_CHAR *parameter, U_CHAR **cipherData, const unsign
 	// The output buffer size needs to be bigger to accomodate incomplete blocks
 	// See EVP_EncryptUpdate documentation for explanation:
 	//https://www.openssl.org/docs/man1.0.2/crypto/EVP_EncryptUpdate.html
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
 	int cipher_block_size = EVP_CIPHER_block_size(ctx->cipher);
+#else
+	int cipher_block_size = EVP_CIPHER_CTX_block_size(ctx);
+#endif
 	int outsize = strlen(parameter) + (cipher_block_size - 1);
 	unsigned char *ciphertext = malloc(outsize);
 	if (ciphertext == NULL) {
