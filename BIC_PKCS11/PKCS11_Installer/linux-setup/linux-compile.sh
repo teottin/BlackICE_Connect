@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -37,12 +37,12 @@ while [ $# -gt 0 ]; do
 	case $1 in
 	-d | --debug)
 		compilation=$debug
-		((compilationCount++))
+		let compilationCount=$compilationCount+1
 		shift
 		;;
 	-r | --release)
 		compilation=$release
-		((compilationCount++))
+		let compilationCount=$compilationCount+1
 		shift
 		;;
 	-c | --clean)
@@ -65,10 +65,10 @@ while [ $# -gt 0 ]; do
 done
 
 ## COMPILATION TYPE CHECKINGS ##
-if ((compilationCount > 1)); then
+if [ $compilationCount -gt 1 ]; then
 	printf "${ERROR}: Specify only 1 of debug (-d) or release (-r)\n" 1>&2
 	exit
-elif ((compilationCount = 0)); then
+elif [ $compilationCount = 0 ]; then
 	printf "${HIGHLIGHT}Selected %s (default)${NC} since no option were specified (use either -d or -r)\n" "$compilation" 1>&2
 fi
 
