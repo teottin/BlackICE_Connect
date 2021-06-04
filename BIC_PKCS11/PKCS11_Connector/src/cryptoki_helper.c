@@ -12,7 +12,6 @@
 
 #include <cryptoki.h>
 #include <src/clientRest.h>
-//#include <crypto/asn1.h>
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 #include <openssl/bio.h>
@@ -3953,7 +3952,11 @@ struct keyObject * AzurePKCS11KeyTranslator(struct key_data_response *keyData, C
         if (!strcmp(keyData->crv, "P-256")) {
             ASN1_OBJECT *oid = OBJ_nid2obj(NID_X9_62_prime256v1);
             if (oid != NULL) {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
                 ecParams = malloc(oid->length+2);
+#else
+                ecParams = malloc(OBJ_length(oid)+2);
+#endif
                 unsigned char *aux = ecParams;
                 ecParamsLen = i2d_ASN1_OBJECT(oid, &aux);
             }
