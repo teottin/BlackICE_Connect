@@ -19,6 +19,7 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, struct url_data *data) {
 	size_t index = data->size;
 	size_t n = (size * nmemb);
 	char* tmp;
+Write_Free_Text("write_data()", LOG_CONTEXT);
 	data->size += (size * nmemb);
 	tmp = realloc(data->data, data->size + 1); /* +1 for '\0' */
 	if (tmp) {
@@ -62,6 +63,7 @@ Write_Free_Text("Https_Request(1)", LOG_CONTEXT);
 		/* Add a custom header */
 Write_Free_Text("Https_Request(2)", LOG_CONTEXT);
 		if (postData->sesion) {
+Write_Free_Text("Https_Request(2a)", LOG_CONTEXT);
 			Write_Debug_Call(postData->url, LOG_CONTEXT);
 			chunk = curl_slist_append(chunk, "Accept: application/json");
 			chunk = curl_slist_append(chunk, "Content-Type: application/json");
@@ -88,8 +90,10 @@ Write_Free_Text("Https_Request(4)", LOG_CONTEXT);
 			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
 			/* Now specify the POST data */
 Write_Free_Text("Https_Request(5)", LOG_CONTEXT);
-			if (postData->parameters != NULL)
+			if (postData->parameters != NULL) {
+Write_Free_Text("Https_Request(5a)", LOG_CONTEXT);
 				curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData->parameters);
+			}
 		}
 		else if (!strcmp(operation, "PATCH")) {
 			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PATCH");
