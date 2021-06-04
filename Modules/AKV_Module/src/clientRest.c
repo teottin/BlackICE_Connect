@@ -16,7 +16,6 @@
 #include <src/common.h>
 
 size_t write_data(void *ptr, size_t size, size_t nmemb, struct url_data *data) {
-Write_Free_Text("write_data()", LOG_CONTEXT);
 	size_t index = data->size;
 	size_t n = (size * nmemb);
 	char* tmp;
@@ -54,16 +53,13 @@ int Https_Request(struct request_data *postData, char** response, char *operatio
 	curl_global_init(CURL_GLOBAL_ALL);
 	curl = curl_easy_init();
 	char errbuf[CURL_ERROR_SIZE];
-Write_Free_Text("Https_Request(1)", LOG_CONTEXT);
 	if (curl) {
 		/* First set the URL that is about to receive our POST. This URL can
 		just as well be a https:// URL if that is what should receive the
 		data. */
 		struct curl_slist *chunk = NULL;
 		/* Add a custom header */
-Write_Free_Text("Https_Request(2)", LOG_CONTEXT);
 		if (postData->sesion) {
-Write_Free_Text("Https_Request(2a)", LOG_CONTEXT);
 			Write_Debug_Call(postData->url, LOG_CONTEXT);
 			chunk = curl_slist_append(chunk, "Accept: application/json");
 			chunk = curl_slist_append(chunk, "Content-Type: application/json");
@@ -84,13 +80,10 @@ Write_Free_Text("Https_Request(2a)", LOG_CONTEXT);
 			/* set our custom set of headers */
 			res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
 		}
-Write_Free_Text("Https_Request(3)", LOG_CONTEXT);
 		if (!strcmp(operation, "POST")) {
-Write_Free_Text("Https_Request(4)", LOG_CONTEXT);
 			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
 			/* Now specify the POST data */
 			if (postData->parameters != NULL) {
-Write_Free_Text("Https_Request(4a)", LOG_CONTEXT);
 				curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData->parameters);
 			}
 		}
@@ -122,8 +115,7 @@ Write_Free_Text("Https_Request(4a)", LOG_CONTEXT);
 
 		}
 		//set curl verbose behavior
-// TEST
-curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+		// TODO: TEO debugging, disable verbose later
 		//curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		curl_easy_setopt(curl, CURLOPT_URL, postData->url);
 		/* For HTTPS */
@@ -135,16 +127,11 @@ curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
 		/*Define variable where response goes*/
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
-/* TEST */
-//curl_easy_setopt(curl, CURLOPT_CERTINFO, 1L);
-Write_Free_Text("Https_Request(11)", LOG_CONTEXT);
 		/* Perform the request, res will get the return code */
 		res = curl_easy_perform(curl);
-Write_Free_Text("Https_Request(12)", LOG_CONTEXT);
 		// HTTP Status code
 		curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
 		/* Check for errors */
-Write_Free_Text("Https_Request(13)", LOG_CONTEXT);
 		if (res != CURLE_OK) {
 			/* always cleanup */
 			curl_easy_cleanup(curl);
@@ -158,7 +145,6 @@ Write_Free_Text("Https_Request(13)", LOG_CONTEXT);
 		curl_slist_free_all(chunk);
 		curl_easy_cleanup(curl);
 	}
-Write_Free_Text("Https_Request(100)", LOG_CONTEXT);
 	curl_global_cleanup();
 	if (data.data) {
 		*response = data.data;
@@ -193,18 +179,13 @@ int Get_AccesToken(struct client_data *clientData, struct token_response ** post
 	strcat(param, clientData->CLIENTID);
 	strcat(param, "&client_secret=");
 	strcat(param, clientData->password);
-Write_Free_Text("Get_AccesToken(2)", LOG_CONTEXT);
-Write_Free_Text(url, LOG_CONTEXT);
-Write_Free_Text(param, LOG_CONTEXT);
 	struct request_data *requestData;
 	requestData = Store_HttpsData(url, param, NULL, FALSE_p);
 	free(url);
 	free(param);
 	if (requestData == NULL) return ALLOCATE_ERROR;
 	char* response;
-Write_Free_Text("Get_AccesToken(4)", LOG_CONTEXT);
 	int result = Https_Request(requestData, &response, "POST");
-Write_Free_Text("Get_AccesToken(5)", LOG_CONTEXT);
 	Free_HttpsData(requestData);
 	if (result == HTTP_OK) {
 		int res = parse_token_response(response, postResponse);
