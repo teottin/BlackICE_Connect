@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Upper-case is used for 'const' variables. Variables which might be changed at some point are lower-case
 HIGHLIGHT='\033[1;33m'
 RED='\033[1;31m'

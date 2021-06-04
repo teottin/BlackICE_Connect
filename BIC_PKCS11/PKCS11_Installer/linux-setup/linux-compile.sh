@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # In order to use colors: ${COLOR_CODE}text${NC}
 HIGHLIGHT='\033[1;33m'
 RED='\033[1;31m'
