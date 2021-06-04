@@ -123,20 +123,26 @@ Write_Free_Text("Https_Request(6)", LOG_CONTEXT);
 		//curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		curl_easy_setopt(curl, CURLOPT_URL, postData->url);
 		/* For HTTPS */
+Write_Free_Text("Https_Request(7)", LOG_CONTEXT);
 		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
 		/* Set CURLOPT_ERRORBUFFER for error message and set errbuf=0*/
+Write_Free_Text("Https_Request(8)", LOG_CONTEXT);
 		errbuf[0] = 0;
 		curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errbuf);
 		/*Define write function to write http response*/
+Write_Free_Text("Https_Request(9)", LOG_CONTEXT);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
 		/*Define variable where response goes*/
+Write_Free_Text("Https_Request(10)", LOG_CONTEXT);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
 		/* Perform the request, res will get the return code */
+Write_Free_Text("Https_Request(11)", LOG_CONTEXT);
 		res = curl_easy_perform(curl);
 		// HTTP Status code
+Write_Free_Text("Https_Request(12)", LOG_CONTEXT);
 		curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
 		/* Check for errors */
-Write_Free_Text("Https_Request(7)", LOG_CONTEXT);
+Write_Free_Text("Https_Request(13)", LOG_CONTEXT);
 		if (res != CURLE_OK) {
 			/* always cleanup */
 			curl_easy_cleanup(curl);
