@@ -15,20 +15,21 @@
 #include <math.h>
 
 struct log_info LOG_CONTEXT;
-long int SESSION_TIMEOUT;
-BOOL HSM_PROCESSED;
-BOOL CIPHER;
-char *TOKEN;
-time_t TOKEN_CREATION;
-char* AUTH_METHOD;
-char *APIVERSION;
-char *AUTH_APIVERSION;
-char *AUTH_URL;
-char *RESOURCE;
-char *CLIENTID;
-char *TENANTID;
-char *HOST;
-char *PASSWORD;
+long int SESSION_TIMEOUT = 0;
+BOOL HSM_PROCESSED = 0;
+BOOL CIPHER = 0;
+char *TOKEN = NULL;
+time_t TOKEN_CREATION = 0;
+char* AUTH_METHOD = NULL;
+char *APIVERSION = NULL;
+char *AUTH_APIVERSION = NULL;
+char *AUTH_URL = NULL;
+char *RESOURCE = NULL;
+char *CLIENTID = NULL;
+char *TENANTID = NULL;
+char *HOST = NULL;
+char *PASSWORD = NULL;
+
 struct id_http_data *Store_IdHttpData(char *token, char *host, char *id) {
 	struct id_http_data * retval = malloc(sizeof(struct id_http_data));
 	if (retval == NULL) return NULL;
