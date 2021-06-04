@@ -16,10 +16,10 @@
 #include <src/common.h>
 
 size_t write_data(void *ptr, size_t size, size_t nmemb, struct url_data *data) {
+Write_Free_Text("write_data()", LOG_CONTEXT);
 	size_t index = data->size;
 	size_t n = (size * nmemb);
 	char* tmp;
-Write_Free_Text("write_data()", LOG_CONTEXT);
 	data->size += (size * nmemb);
 	tmp = realloc(data->data, data->size + 1); /* +1 for '\0' */
 	if (tmp) {
@@ -89,9 +89,8 @@ Write_Free_Text("Https_Request(3)", LOG_CONTEXT);
 Write_Free_Text("Https_Request(4)", LOG_CONTEXT);
 			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
 			/* Now specify the POST data */
-Write_Free_Text("Https_Request(5)", LOG_CONTEXT);
 			if (postData->parameters != NULL) {
-Write_Free_Text("Https_Request(5a)", LOG_CONTEXT);
+Write_Free_Text("Https_Request(4a)", LOG_CONTEXT);
 				curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData->parameters);
 			}
 		}
@@ -122,28 +121,27 @@ Write_Free_Text("Https_Request(5a)", LOG_CONTEXT);
 			return BAD_REQUEST;
 
 		}
-Write_Free_Text("Https_Request(6)", LOG_CONTEXT);
 		//set curl verbose behavior
+// TEST
+curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		//curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		curl_easy_setopt(curl, CURLOPT_URL, postData->url);
 		/* For HTTPS */
-Write_Free_Text("Https_Request(7)", LOG_CONTEXT);
 		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
 		/* Set CURLOPT_ERRORBUFFER for error message and set errbuf=0*/
-Write_Free_Text("Https_Request(8)", LOG_CONTEXT);
 		errbuf[0] = 0;
 		curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errbuf);
 		/*Define write function to write http response*/
-Write_Free_Text("Https_Request(9)", LOG_CONTEXT);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
 		/*Define variable where response goes*/
-Write_Free_Text("Https_Request(10)", LOG_CONTEXT);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
-		/* Perform the request, res will get the return code */
+/* TEST */
+curl_easy_setopt(curl, CURLOPT_CERTINFO, 1L);
 Write_Free_Text("Https_Request(11)", LOG_CONTEXT);
+		/* Perform the request, res will get the return code */
 		res = curl_easy_perform(curl);
-		// HTTP Status code
 Write_Free_Text("Https_Request(12)", LOG_CONTEXT);
+		// HTTP Status code
 		curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
 		/* Check for errors */
 Write_Free_Text("Https_Request(13)", LOG_CONTEXT);
