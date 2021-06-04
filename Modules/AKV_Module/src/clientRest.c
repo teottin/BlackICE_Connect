@@ -136,7 +136,7 @@ curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		/*Define variable where response goes*/
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
 /* TEST */
-curl_easy_setopt(curl, CURLOPT_CERTINFO, 1L);
+//curl_easy_setopt(curl, CURLOPT_CERTINFO, 1L);
 Write_Free_Text("Https_Request(11)", LOG_CONTEXT);
 		/* Perform the request, res will get the return code */
 		res = curl_easy_perform(curl);
