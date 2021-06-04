@@ -155,6 +155,9 @@ int Https_Request(struct request_data *postData, char** response, char *operatio
 int Get_AccesToken(struct client_data *clientData, struct token_response ** postResponse)
 {
 	size_t size;
+
+Write_Free_Text("Get_AccesToken(1)", LOG_CONTEXT);
+
 	//Seting url to post request
 	size = sizeof(char)*(strlen(clientData->AUTH_URL) + strlen("/") + strlen(clientData->TENANTID) + strlen("/oauth2/token?api-version=") + strlen(AUTH_APIVERSION) + 1);
 	char *url = malloc(size);
@@ -176,14 +179,19 @@ int Get_AccesToken(struct client_data *clientData, struct token_response ** post
 	strcat(param, clientData->CLIENTID);
 	strcat(param, "&client_secret=");
 	strcat(param, clientData->password);
+Write_Free_Text("Get_AccesToken(2)", LOG_CONTEXT);
 	struct request_data *requestData;
 	requestData = Store_HttpsData(url, param, NULL, FALSE_p);
 	free(url);
 	free(param);
+Write_Free_Text("Get_AccesToken(3)", LOG_CONTEXT);
 	if (requestData == NULL) return ALLOCATE_ERROR;
 	char* response;
+Write_Free_Text("Get_AccesToken(4)", LOG_CONTEXT);
 	int result = Https_Request(requestData, &response, "POST");
+Write_Free_Text("Get_AccesToken(5)", LOG_CONTEXT);
 	Free_HttpsData(requestData);
+Write_Free_Text("Get_AccesToken(6)", LOG_CONTEXT);
 	if (result == HTTP_OK) {
 		int res = parse_token_response(response, postResponse);
 		free(response);
