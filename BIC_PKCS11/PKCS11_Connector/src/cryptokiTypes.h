@@ -336,7 +336,7 @@ struct last_call_timer {
 	time_t certificateListeTimer;
 	time_t keyListTimer;
 	time_t secretListTimer;
-}lastCallTimer;
+};
 
 extern struct last_call_timer lastCallTimer;
 
