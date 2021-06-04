@@ -69,14 +69,14 @@
 
 // This is the only thing needed here from common.h, that's why this is redeclared here instead of included.
 typedef int BOOL;
-char *APIVERSION;
-char *AUTH_APIVERSION;
-char *AUTH_URL;
-char *RESOURCE;
-char *CLIENTID;
-char *TENANTID;
-char *HOST;
-char *PASSWORD;
+extern char *APIVERSION;
+extern char *AUTH_APIVERSION;
+extern char *AUTH_URL;
+extern char *RESOURCE;
+extern char *CLIENTID;
+extern char *TENANTID;
+extern char *HOST;
+extern char *PASSWORD;
 
 #ifndef STRUCT_LOG_INFO
 #define STRUCT_LOG_INFO
@@ -86,15 +86,16 @@ struct log_info {
 	long int MAX_LOG_BYTES;
 	BOOL DELETE_PREV_LOG_FILE;
 	BOOL LOG_MODE_SAVE_HISTORY;
-} LOG_CONTEXT;
+};
 #endif /* STRUCT_LOG_INFO */
 
-long int SESSION_TIMEOUT;
-BOOL HSM_PROCESSED;
-BOOL CIPHER;
-char *TOKEN;
-time_t TOKEN_CREATION;
-char* AUTH_METHOD;
+extern struct log_info LOG_CONTEXT;
+extern long int SESSION_TIMEOUT;
+extern BOOL HSM_PROCESSED;
+extern BOOL CIPHER;
+extern char *TOKEN;
+extern time_t TOKEN_CREATION;
+extern char* AUTH_METHOD;
 
 //GCC throws warning about those structs being declared inside parameter list of functions in this file (they are
 //actually not included from ClientRest.h) and then it throws "error: conflicting types for <function_name>".

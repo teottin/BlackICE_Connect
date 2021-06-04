@@ -14,6 +14,21 @@
 #include <src/common.h>
 #include <math.h>
 
+struct log_info LOG_CONTEXT;
+long int SESSION_TIMEOUT;
+BOOL HSM_PROCESSED;
+BOOL CIPHER;
+char *TOKEN;
+time_t TOKEN_CREATION;
+char* AUTH_METHOD;
+char *APIVERSION;
+char *AUTH_APIVERSION;
+char *AUTH_URL;
+char *RESOURCE;
+char *CLIENTID;
+char *TENANTID;
+char *HOST;
+char *PASSWORD;
 struct id_http_data *Store_IdHttpData(char *token, char *host, char *id) {
 	struct id_http_data * retval = malloc(sizeof(struct id_http_data));
 	if (retval == NULL) return NULL;
