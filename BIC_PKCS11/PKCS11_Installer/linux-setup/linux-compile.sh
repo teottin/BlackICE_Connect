@@ -125,7 +125,7 @@ cp $confTemplateFile $linuxInstallerCompletePath
 
 cp $ROOT_PATH/bin/linux-$compilation/$arch/* $linuxInstallerCompletePath
 
-distributionNamePath+="_${compilation}_${arch}"
+distributionNamePath="${distributionNamePath}_${compilation}_${arch}"
 
 mv $linuxInstallerCompletePath $distributionNamePath
 tar -czvf $distributionNamePath/GradiantBlackIceConnect_${compilation}_${arch}.tar.gz $distributionNamePath/*
