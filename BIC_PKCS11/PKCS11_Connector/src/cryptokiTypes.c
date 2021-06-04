@@ -12,6 +12,7 @@
 
 #include <cryptokiTypes.h>
 
+struct last_call_timer lastCallTimer;
 
 void Free_keyObject(struct keyObject * delData) {
 	if (delData != NULL) {

@@ -338,6 +338,7 @@ struct last_call_timer {
 	time_t secretListTimer;
 }lastCallTimer;
 
+extern struct last_call_timer lastCallTimer;
 
 /***************************************************************************************//**
 *                                     Prototypes
