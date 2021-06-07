@@ -967,10 +967,11 @@ CK_ULONG Compare_Attributes(struct objects * object, CK_ATTRIBUTE attribute, int
 			return CKR_OK;
 		case CKA_ALWAYS_AUTHENTICATE:
 			if (attribute.ulValueLen != sizeof(CK_BBOOL)) return CKR_ATTRIBUTE_VALUE_INVALID;
-			if (object->keyObject->commonPrivateKeyAtt.isAlwaysAuthenticate == *(CK_BBOOL*)attribute.pValue) {
-				*match = TRUE;
-			}
-			else *match = FALSE;
+			// TEST: Don't report this as it causes problems and is not relevant (authentication is using bearer token, not pin code)
+			/*if (object->keyObject->commonPrivateKeyAtt.isAlwaysAuthenticate == *(CK_BBOOL*)attribute.pValue) {
+			//	*match = TRUE;
+			//}
+			else */*match = FALSE;
 			return CKR_OK;
 		case CKA_MODULUS:
 			if (object->keyObject->RSAPrivateKeyObjectAtt.modulus.len != attribute.ulValueLen) {
