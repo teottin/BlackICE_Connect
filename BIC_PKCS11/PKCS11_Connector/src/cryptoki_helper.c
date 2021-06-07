@@ -967,11 +967,10 @@ CK_ULONG Compare_Attributes(struct objects * object, CK_ATTRIBUTE attribute, int
 			return CKR_OK;
 		case CKA_ALWAYS_AUTHENTICATE:
 			if (attribute.ulValueLen != sizeof(CK_BBOOL)) return CKR_ATTRIBUTE_VALUE_INVALID;
-			// TEST: Don't report this as it causes problems and is not relevant (authentication is using bearer token, not pin code)
-			/*if (object->keyObject->commonPrivateKeyAtt.isAlwaysAuthenticate == *(CK_BBOOL*)attribute.pValue) {
-			//	*match = TRUE;
-			//}
-			else */*match = FALSE;
+			if (object->keyObject->commonPrivateKeyAtt.isAlwaysAuthenticate == *(CK_BBOOL*)attribute.pValue) {
+				*match = TRUE;
+			}
+			else *match = FALSE;
 			return CKR_OK;
 		case CKA_MODULUS:
 			if (object->keyObject->RSAPrivateKeyObjectAtt.modulus.len != attribute.ulValueLen) {
@@ -3989,7 +3988,9 @@ struct keyObject * AzurePKCS11KeyTranslator(struct key_data_response *keyData, C
 		retval->commonPrivateKeyAtt.isNeverExtractable = CK_TRUE;
 		retval->commonPrivateKeyAtt.beWrapWithTrusted = CK_TRUE;
 		//retval->commonPrivateKeyAtt.unwrapTemplate
-		retval->commonPrivateKeyAtt.isAlwaysAuthenticate = CK_TRUE;
+		// TEST: Don't need to authenticate
+		//retval->commonPrivateKeyAtt.isAlwaysAuthenticate = CK_TRUE;
+		retval->commonPrivateKeyAtt.isAlwaysAuthenticate = CK_FALSE;
 		if ((!strcmp(keyData->keytype, "RSA")) || (!strcmp(keyData->keytype, "RSA-HSM"))) {
 			strcpy(retval->commonAtt.label, "RSA Private Key ");
 			len = strlen(retval->commonAtt.label + 1);
